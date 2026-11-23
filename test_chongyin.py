@@ -1,4 +1,4 @@
-"""重垠（CHONGYIN）算子骨架单测：名帖完整、桩位齐整、只增不覆盖。"""
+"""重垠（CHONGYIN）算子单测：名帖完整、行为达标、只增不覆盖。"""
 import unittest
 
 from chongyin import Chongyin
@@ -15,13 +15,11 @@ class TestChongyin(unittest.TestCase):
         self.assertTrue(d["anchor"].startswith("Ω₀⊂⊙∞⊂Ω"))
         self.assertTrue(d["mingwen"])
 
-    def test_replicate_stub(self):
-        with self.assertRaises(NotImplementedError):
-            self.op.replicate(None)
-
-    def test_verify_replica_stub(self):
-        with self.assertRaises(NotImplementedError):
-            self.op.verify_replica(None)
+    def test_replicate_and_verify(self):
+        rid = self.op.replicate({"data": "正本"})
+        self.assertTrue(self.op.verify_replica(rid))
+        with self.assertRaises(KeyError):
+            self.op.verify_replica("CY-9999")
 
 
 if __name__ == "__main__":
